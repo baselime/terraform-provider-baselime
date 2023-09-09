@@ -19,3 +19,11 @@
 
 # Go workspace file
 go.work
+
+examples/*/.terraform.lock.hcl
+examples/*/.terraform/
+examples/*/terraform.tfstate
+examples/*/terraform.tfstate.backup
+
+# Ignore .idea directory
+.idea
