@@ -48,7 +48,7 @@ type AlertThreshold struct {
 }
 
 func (c *Client) CreateAlert(ctx context.Context, alert *Alert) error {
-	url := "/alerts"
+	url := "/v1/alerts"
 	buf := new(bytes.Buffer)
 	_ = json.NewEncoder(buf).Encode(alert)
 	req, err := http.NewRequest(http.MethodPost, url, buf)
@@ -70,7 +70,7 @@ func (c *Client) CreateAlert(ctx context.Context, alert *Alert) error {
 }
 
 func (c *Client) GetAlert(ctx context.Context, serviceId, alertId string) (*Alert, error) {
-	url := fmt.Sprintf("/alerts/%s/%s", serviceId, alertId)
+	url := fmt.Sprintf("/v1/alerts/%s/%s", serviceId, alertId)
 	tflog.Trace(ctx, "getting an alert", map[string]interface{}{
 		"serviceId": serviceId,
 		"alertId":   alertId,
@@ -84,7 +84,19 @@ func (c *Client) GetAlert(ctx context.Context, serviceId, alertId string) (*Aler
 		return nil, err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode == http.StatusNotFound {
+		tflog.Trace(ctx, "alert not found", map[string]interface{}{
+			"serviceId": serviceId,
+			"alertId":   alertId,
+		})
+		return nil, nil
+	}
 	if resp.StatusCode != http.StatusOK {
+		tflog.Error(ctx, "failed to get alert", map[string]interface{}{
+			"status":    resp.Status,
+			"serviceId": serviceId,
+			"alertId":   alertId,
+		})
 		return nil, fmt.Errorf("failed to get alert with status %s", resp.Status)
 	}
 	alertResponse := new(AlertResponse)
@@ -92,7 +104,7 @@ func (c *Client) GetAlert(ctx context.Context, serviceId, alertId string) (*Aler
 }
 
 func (c *Client) UpdateAlert(ctx context.Context, alert *Alert) error {
-	url := fmt.Sprintf("/alerts/%s/%s", alert.Service, alert.Id)
+	url := fmt.Sprintf("/v1/alerts/%s/%s", alert.Service, alert.Id)
 	buf := new(bytes.Buffer)
 	err := json.NewEncoder(buf).Encode(alert)
 	if err != nil {
@@ -117,7 +129,7 @@ func (c *Client) UpdateAlert(ctx context.Context, alert *Alert) error {
 }
 
 func (c *Client) DeleteAlert(ctx context.Context, serviceId, alertId string) error {
-	url := fmt.Sprintf("/alerts/%s/%s", serviceId, alertId)
+	url := fmt.Sprintf("/v1/alerts/%s/%s", serviceId, alertId)
 	tflog.Trace(ctx, "deleting an alert", map[string]interface{}{
 		"serviceId": serviceId,
 		"alertId":   alertId,

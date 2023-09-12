@@ -2,10 +2,16 @@ package client
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"net/http"
 )
+
+type GetDashboardResponse struct {
+	Dashboard *Dashboard `json:"dashboard"`
+}
 
 type Dashboard struct {
 	Id          string              `json:"id"`
@@ -36,8 +42,8 @@ var (
 )
 
 // CreateDashboard creates a new dashboard
-func (c *Client) CreateDashboard(dashboard *Dashboard) error {
-	path := "/dashboards/"
+func (c *Client) CreateDashboard(ctx context.Context, dashboard *Dashboard) error {
+	path := "/v1/dashboards/"
 	buf := new(bytes.Buffer)
 	err := json.NewEncoder(buf).Encode(dashboard)
 	if err != nil {
@@ -51,15 +57,15 @@ func (c *Client) CreateDashboard(dashboard *Dashboard) error {
 	if err != nil {
 		return err
 	}
-	if resp.StatusCode != http.StatusCreated {
+	if resp.StatusCode != http.StatusCreated && resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("unexpected status code %d", resp.StatusCode)
 	}
 	return nil
 }
 
 // GetDashboard retrieves an existing dashboard
-func (c *Client) GetDashboard(serviceId, dashboardId string) (*Dashboard, error) {
-	path := fmt.Sprintf("/dashboards/%s/%s", serviceId, dashboardId)
+func (c *Client) GetDashboard(ctx context.Context, serviceId, dashboardId string) (*Dashboard, error) {
+	path := fmt.Sprintf("/v1/dashboards/%s/%s", serviceId, dashboardId)
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
 		return nil, err
@@ -68,20 +74,31 @@ func (c *Client) GetDashboard(serviceId, dashboardId string) (*Dashboard, error)
 	if err != nil {
 		return nil, err
 	}
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode == http.StatusNotFound {
+		tflog.Trace(ctx, "dashboard not found", map[string]interface{}{
+			"serviceId":   serviceId,
+			"dashboardId": dashboardId,
+		})
+		return nil, nil
+	} else if resp.StatusCode != http.StatusOK {
+		tflog.Error(ctx, "failed to get a dashboard", map[string]interface{}{
+			"status_code": resp.StatusCode,
+			"serviceId":   serviceId,
+			"dashboardId": dashboardId,
+		})
 		return nil, fmt.Errorf("unexpected status code %d", resp.StatusCode)
 	}
-	var dashboard Dashboard
-	err = json.NewDecoder(resp.Body).Decode(&dashboard)
+	var response GetDashboardResponse
+	err = json.NewDecoder(resp.Body).Decode(&response)
 	if err != nil {
 		return nil, err
 	}
-	return &dashboard, nil
+	return response.Dashboard, nil
 }
 
 // UpdateDashboard updates an existing dashboard
-func (c *Client) UpdateDashboard(dashboard *Dashboard) error {
-	path := fmt.Sprintf("/dashboards/%s/%s", dashboard.Service, dashboard.Id)
+func (c *Client) UpdateDashboard(ctx context.Context, dashboard *Dashboard) error {
+	path := fmt.Sprintf("/v1/dashboards/%s/%s", dashboard.Service, dashboard.Id)
 	buf := new(bytes.Buffer)
 	err := json.NewEncoder(buf).Encode(dashboard)
 	if err != nil {
@@ -102,8 +119,8 @@ func (c *Client) UpdateDashboard(dashboard *Dashboard) error {
 }
 
 // DeleteDashboard deletes an existing dashboard
-func (c *Client) DeleteDashboard(serviceId, dashboardId string) error {
-	path := fmt.Sprintf("/dashboards/%s/%s", serviceId, dashboardId)
+func (c *Client) DeleteDashboard(ctx context.Context, serviceId, dashboardId string) error {
+	path := fmt.Sprintf("/v1/dashboards/%s/%s", serviceId, dashboardId)
 	req, err := http.NewRequest(http.MethodDelete, path, nil)
 	if err != nil {
 		return err

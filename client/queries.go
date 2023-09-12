@@ -109,8 +109,17 @@ func (c *Client) GetQuery(ctx context.Context, serviceId, queryId string) (*Quer
 	if err != nil {
 		return nil, err
 	}
-	q := new(GetQueryResponse)
-	return q.Query, json.NewDecoder(resp.Body).Decode(q)
+	if resp.StatusCode == http.StatusNotFound {
+		return nil, nil
+	} else if resp.StatusCode != http.StatusOK {
+		tflog.Error(ctx, "error getting query", map[string]interface{}{
+			"serviceId": serviceId,
+			"queryId":   queryId,
+		})
+		return nil, fmt.Errorf("error getting query: %s", resp.Status)
+	}
+	response := new(GetQueryResponse)
+	return response.Query, json.NewDecoder(resp.Body).Decode(response)
 }
 
 func (c *Client) UpdateQuery(ctx context.Context, query *Query) error {

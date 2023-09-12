@@ -125,6 +125,10 @@ func (r *AlertResource) Create(ctx context.Context, req resource.CreateRequest, 
 
 func (r *AlertResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var data models.AlertResourceModel
+
+	// Read Terraform state data into the model
+	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+
 	if resp.Diagnostics.HasError() {
 		return
 	}

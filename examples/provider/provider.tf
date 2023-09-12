@@ -2,7 +2,6 @@ terraform {
   required_providers {
     baselime = {
       version = "~> 1.0.0"
-#      source  = "baselime.io/baselimeio/baselimeio"
       source  = "baselime.io/baselimeio/baselimeio"
     }
   }
@@ -10,7 +9,7 @@ terraform {
 
 provider "baselime" {
   # example configuration here
-  api_key = "foo"
+  api_key = ""
   api_host = "go.baselime.io"
 #  api_host = "localhost:32768"
 #  api_scheme = "http"
@@ -71,6 +70,20 @@ resource "baselime_alert" "terraformed" {
     operator = "GREATER_THAN"
     value     = 0
   }
-  frequency = "5m"
+  frequency = "10m"
   window    = "5m"
+}
+
+resource "baselime_dashboard" "terraformed" {
+  name        = "terraformed-dashboard"
+  description = "This alert was created by Terraform"
+  service     = "default"
+  widgets     = [
+    {
+      query_id     = baselime_query.terraformed.id
+      type        = "timeseries"
+      name        = "Line Chart"
+      description = "This is a line chart"
+    }
+  ]
 }

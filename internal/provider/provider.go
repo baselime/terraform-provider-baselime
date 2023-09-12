@@ -88,6 +88,7 @@ func (p *BaselimeProvider) Resources(ctx context.Context) []func() resource.Reso
 	return []func() resource.Resource{
 		NewQueryResource,
 		NewAlertResource,
+		NewDashboardResource,
 	}
 }
 
