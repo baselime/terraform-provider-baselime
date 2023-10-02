@@ -2,7 +2,7 @@ package provider
 
 import (
 	"context"
-	"github.com/baselime/terraform-provider-baselimeio/client"
+	"github.com/baselime/terraform-provider-baselime/client"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"

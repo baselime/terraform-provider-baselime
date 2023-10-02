@@ -2,7 +2,7 @@ terraform {
   required_providers {
     baselime = {
       version = "~> 1.0.0"
-      source  = "baselime.io/baselimeio/baselimeio"
+      source  = "baselime.io/baselime/baselime"
     }
   }
 }

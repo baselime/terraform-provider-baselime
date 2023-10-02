@@ -3,8 +3,8 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/baselime/terraform-provider-baselimeio/client"
-	"github.com/baselime/terraform-provider-baselimeio/internal/models"
+	"github.com/baselime/terraform-provider-baselime/client"
+	"github.com/baselime/terraform-provider-baselime/internal/models"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"

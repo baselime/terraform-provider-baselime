@@ -8,7 +8,7 @@ import (
 	"flag"
 	"log"
 
-	"github.com/baselime/terraform-provider-baselimeio/internal/provider"
+	"github.com/baselime/terraform-provider-baselime/internal/provider"
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
 )
 
@@ -38,8 +38,7 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		// TODO: Update this string with the published name of your provider.
-		Address: "registry.terraform.io/baselimeio/baselimeio",
+		Address: "registry.terraform.io/baselime/baselime",
 		Debug:   debug,
 	}
 

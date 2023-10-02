@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/baselime/terraform-provider-baselimeio/client"
+	"github.com/baselime/terraform-provider-baselime/client"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 

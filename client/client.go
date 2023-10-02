@@ -35,7 +35,7 @@ func NewClient(config *Config) *Client {
 }
 
 func defaultConfig() *Config {
-	apiKey := os.Getenv("BASELIMEIO_API_KEY")
+	apiKey := os.Getenv("BASELIME_API_KEY")
 	return &Config{
 		"0.0.1",
 		apiKey,

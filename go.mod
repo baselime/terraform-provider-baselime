@@ -1,4 +1,4 @@
-module github.com/baselime/terraform-provider-baselimeio
+module github.com/baselime/terraform-provider-baselime
 
 go 1.20
 
