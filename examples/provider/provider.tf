@@ -1,18 +1,14 @@
 terraform {
   required_providers {
     baselime = {
-      version = "~> 1.0.0"
-      source  = "baselime.io/baselime/baselime"
+      version = "~> 0.1.0"
+      source  = "baselime/baselime"
     }
   }
 }
 
 provider "baselime" {
-  # example configuration here
-  api_key = ""
   api_host = "go.baselime.io"
-#  api_host = "localhost:32768"
-#  api_scheme = "http"
 }
 
 resource "baselime_query" "terraformed" {

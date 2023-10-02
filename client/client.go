@@ -36,10 +36,14 @@ func NewClient(config *Config) *Client {
 
 func defaultConfig() *Config {
 	apiKey := os.Getenv("BASELIME_API_KEY")
+	apiHost := os.Getenv("BASELIME_API_HOST")
+	if apiHost == "" {
+		apiHost = "api.baselime.io"
+	}
 	return &Config{
-		"0.0.1",
+		"0.1.1",
 		apiKey,
-		"go.baselime.io",
+		apiHost,
 		"https",
 		false,
 	}
