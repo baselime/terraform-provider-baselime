@@ -23,7 +23,7 @@ terraform {
 }
 
 provider "baselime" {
-  api_host = "go.baselime.io"
+  api_key = "your_api_key"
 }
 
 resource "baselime_query" "terraformed" {
