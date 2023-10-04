@@ -73,7 +73,7 @@ resource "baselime_alert" "terraformed" {
   channels = [
     {
       type    = "email"
-      targets = ["maksym@baselime.io"]
+      targets = ["foo@baselime.io"]
     }
   ]
   query     = baselime_query.terraformed.id

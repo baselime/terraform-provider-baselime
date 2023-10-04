@@ -1,8 +1,41 @@
-# Examples
+# Baselime.io Terraform Provider
 
-This directory contains examples that are mostly used for documentation, but can also be run/tested manually via the Terraform CLI.
+A Terraform provider for [Baselime.io](https://baselime.io).
 
-The document generation tool looks for files in the following locations by default. All other *.tf files besides the ones mentioned below are ignored by the documentation tool. This is useful for creating examples that can run and/or ar testable even if some parts are not relevant for the documentation.
+## Resources
+#### [Documentation](https://registry.terraform.io/providers/baselime/baselime/latest/docs)
+#### [Examples](https://github.com/baselime/terraform-provider-baselime/tree/main/examples/resources)
 
-* **provider/provider.tf** example file for the provider index page
-* **resources/resources/resource.tf** example file for the named data source page
+## Community
+If you have any questions or want to discuss Baselime.io, please join our [Slack community](https://join.slack.com/t/baselimecommunity/shared_invite/zt-24fbumkc5-9O6qIj92xW_CbQSHeKT7CQ).
+
+## Using the provider
+```terraform
+terraform {
+  required_providers {
+    baselime = {
+      version = "~> 0.1.0"
+      source  = "baselime/baselime"
+    }
+  }
+}
+
+provider "baselime" {
+  api_key = "your_api_key"
+}
+```
+
+#### Api Key
+To find your key:
+1. Navigate to https://console.baselime.cc
+2. Select the workspace you need
+3. Select the environment you want to get the key for
+4. Click on the "API Keys" button on the left-hand side menu (key icon)
+
+The API key can be supplied via the `BASELIME_API_KEY` environment variable as well.
+
+
+#### Resource types
+- [Query](https://registry.terraform.io/providers/baselime/baselime/latest/docs/resources/query)
+- [Dashboard](https://registry.terraform.io/providers/baselime/baselime/latest/docs/resources/dashboard)
+- [Alert](https://registry.terraform.io/providers/baselime/baselime/latest/docs/resources/alert)
