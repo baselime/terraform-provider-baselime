@@ -1,13 +1,14 @@
-# Baselime.io Terraform Provider
+# Baselime Observability as Code Terraform Provider
 
-A Terraform provider for [Baselime.io](https://baselime.io).
+Observability as Code with the [Baselime](https://baselime.io) Terraform provider.
 
 ## Resources
-#### [Documentation](https://registry.terraform.io/providers/baselime/baselime/latest/docs)
-#### [Examples](https://github.com/baselime/terraform-provider-baselime/tree/main/examples/resources)
+
+[Documentation](https://registry.terraform.io/providers/baselime/baselime/latest/docs)
+[Examples](https://github.com/baselime/terraform-provider-baselime/tree/main/examples/resources)
 
 ## Community
-If you have any questions or want to discuss Baselime.io, please join our [Slack community](https://join.slack.com/t/baselimecommunity/shared_invite/zt-24fbumkc5-9O6qIj92xW_CbQSHeKT7CQ).
+If you have any questions or want to discuss Baselime, please join our [Slack community](https://join.slack.com/t/baselimecommunity/shared_invite/zt-24fbumkc5-9O6qIj92xW_CbQSHeKT7CQ).
 
 ## Using the provider
 ```terraform
@@ -27,7 +28,7 @@ provider "baselime" {
 
 #### Api Key
 To find your key:
-1. Navigate to https://console.baselime.cc
+1. Navigate to https://console.baselime.io
 2. Select the workspace you need
 3. Select the environment you want to get the key for
 4. Click on the "API Keys" button on the left-hand side menu (key icon)
