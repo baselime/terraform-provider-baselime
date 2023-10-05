@@ -8,7 +8,7 @@ import (
 
 func TestClient_GetQueries(t *testing.T) {
 	config := &Config{
-		APIHost: "go.baselime.cc",
+		APIHost: "go.baselime.io",
 		APIKey:  os.Getenv("BASELIME_API_KEY"),
 	}
 	c := NewClient(config)
@@ -62,7 +62,7 @@ func TestClient_CreateQuery(t *testing.T) {
 		},
 	}
 	config := &Config{
-		APIHost: "go.baselime.cc",
+		APIHost: "go.baselime.io",
 		//APIHost:   "localhost:32768",
 		//ApiScheme: "http",
 		APIKey: os.Getenv("BASELIME_API_KEY"),

@@ -8,7 +8,7 @@ import (
 
 func TestClient_GetDashboard(t *testing.T) {
 	config := &Config{
-		APIHost: "go.baselime.cc",
+		APIHost: "go.baselime.io",
 		APIKey:  os.Getenv("BASELIME_API_KEY"),
 	}
 	c := NewClient(config)

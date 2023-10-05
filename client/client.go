@@ -38,7 +38,7 @@ func defaultConfig() *Config {
 	apiKey := os.Getenv("BASELIME_API_KEY")
 	apiHost := os.Getenv("BASELIME_API_HOST")
 	if apiHost == "" {
-		apiHost = "api.baselime.io"
+		apiHost = "go.baselime.io"
 	}
 	return &Config{
 		"0.1.1",
