@@ -41,7 +41,7 @@ func defaultConfig() *Config {
 		apiHost = "api.baselime.io"
 	}
 	return &Config{
-		"0.1.1",
+		"0.1.2",
 		apiKey,
 		apiHost,
 		"https",
