@@ -132,7 +132,7 @@ func (r *AlertResource) Read(ctx context.Context, req resource.ReadRequest, resp
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	alert, err := r.client.GetAlert(ctx, data.Service.ValueString(), data.Name.ValueString())
+	alert, err := r.client.GetAlert(ctx, data.Name.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to read alert, got error: %s", err))
 		return
@@ -168,7 +168,7 @@ func (r *AlertResource) Delete(ctx context.Context, req resource.DeleteRequest, 
 		return
 	}
 
-	err := r.client.DeleteAlert(ctx, data.Service.ValueString(), data.Name.ValueString())
+	err := r.client.DeleteAlert(ctx, data.Name.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to delete alert, got error: %s", err))
 		return

@@ -21,7 +21,6 @@ type Query struct {
 	Id          string          `json:"id"`
 	Name        string          `json:"name"`
 	Description string          `json:"description"`
-	Service     string          `json:"service"`
 	Parameters  QueryParameters `json:"parameters"`
 }
 
@@ -92,17 +91,13 @@ func (c *Client) CreateQuery(ctx context.Context, query *Query) error {
 	return nil
 }
 
-func (c *Client) GetQuery(ctx context.Context, serviceId, queryId string) (*Query, error) {
-	if serviceId == "" {
-		return nil, fmt.Errorf("serviceId is required")
-	}
+func (c *Client) GetQuery(ctx context.Context, queryId string) (*Query, error) {
 	if queryId == "" {
 		return nil, fmt.Errorf("queryId is required")
 	}
-	url := fmt.Sprintf("/v1/queries/%s/%s", serviceId, queryId)
+	url := fmt.Sprintf("/v1/queries/%s", queryId)
 	tflog.Trace(ctx, "getting a query", map[string]interface{}{
-		"serviceId": serviceId,
-		"queryId":   queryId,
+		"queryId": queryId,
 	})
 	httpReq, err := http.NewRequest("GET", url, nil)
 	resp, err := c.httpClient.Do(httpReq)
@@ -113,8 +108,7 @@ func (c *Client) GetQuery(ctx context.Context, serviceId, queryId string) (*Quer
 		return nil, nil
 	} else if resp.StatusCode != http.StatusOK {
 		tflog.Error(ctx, "error getting query", map[string]interface{}{
-			"serviceId": serviceId,
-			"queryId":   queryId,
+			"queryId": queryId,
 		})
 		return nil, fmt.Errorf("error getting query: %s", resp.Status)
 	}
@@ -123,7 +117,7 @@ func (c *Client) GetQuery(ctx context.Context, serviceId, queryId string) (*Quer
 }
 
 func (c *Client) UpdateQuery(ctx context.Context, query *Query) error {
-	path := fmt.Sprintf("/v1/queries/%s/%s", query.Service, query.Id)
+	path := fmt.Sprintf("/v1/queries/%s", query.Id)
 	b, err := json.Marshal(query)
 	if err != nil {
 		return err
@@ -147,11 +141,10 @@ func (c *Client) UpdateQuery(ctx context.Context, query *Query) error {
 	return nil
 }
 
-func (c *Client) DeleteQuery(ctx context.Context, serviceId, queryId string) error {
-	path := fmt.Sprintf("/v1/queries/%s/%s", serviceId, queryId)
+func (c *Client) DeleteQuery(ctx context.Context, queryId string) error {
+	path := fmt.Sprintf("/v1/queries/%s", queryId)
 	tflog.Trace(ctx, "deleting a query", map[string]interface{}{
-		"serviceId": serviceId,
-		"queryId":   queryId,
+		"queryId": queryId,
 	})
 	httpReq, err := http.NewRequest(http.MethodDelete, path, nil)
 	if err != nil {

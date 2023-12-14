@@ -155,8 +155,7 @@ func (r *QueryResource) Create(ctx context.Context, req resource.CreateRequest, 
 		return
 	}
 	tflog.Trace(ctx, "query created", map[string]interface{}{
-		"name":    data.Name,
-		"service": data.Service,
+		"name": data.Name,
 	})
 
 	// Save data into Terraform state
@@ -172,7 +171,7 @@ func (r *QueryResource) Read(ctx context.Context, req resource.ReadRequest, resp
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	query, err := r.client.GetQuery(ctx, data.Service.ValueString(), data.Name.ValueString())
+	query, err := r.client.GetQuery(ctx, data.Name.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to read query, got error: %s", err))
 		return
@@ -210,7 +209,7 @@ func (r *QueryResource) Delete(ctx context.Context, req resource.DeleteRequest, 
 		return
 	}
 
-	err := r.client.DeleteQuery(ctx, data.Service.ValueString(), data.Name.ValueString())
+	err := r.client.DeleteQuery(ctx, data.Name.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to delete query, got error: %s", err))
 		return

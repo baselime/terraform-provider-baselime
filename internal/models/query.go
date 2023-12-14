@@ -85,7 +85,6 @@ type QueryResourceModel struct {
 	Id                types.String       `tfsdk:"id"`
 	Name              types.String       `tfsdk:"name"`
 	Description       types.String       `tfsdk:"description"`
-	Service           types.String       `tfsdk:"service"`
 	Datasets          []string           `tfsdk:"datasets"`
 	Filters           []QueryFilter      `tfsdk:"filters"`
 	FilterCombination types.String       `tfsdk:"filter_combination"`
@@ -99,7 +98,6 @@ type QueryResourceModel struct {
 func (data *QueryResourceModel) FromApiObject(obj *client.Query) {
 	data.Name = types.StringValue(obj.Name)
 	data.Description = types.StringValue(obj.Description)
-	data.Service = types.StringValue(obj.Service)
 	data.Datasets = obj.Parameters.Datasets
 	if obj.Parameters.Filters != nil {
 		data.Filters = func() []QueryFilter {
@@ -160,7 +158,6 @@ func (data *QueryResourceModel) ToApiObject() *client.Query {
 		Id:          data.Name.ValueString(),
 		Name:        data.Name.ValueString(),
 		Description: data.Description.ValueString(),
-		Service:     data.Service.ValueString(),
 		Parameters: client.QueryParameters{
 			Datasets: data.Datasets,
 			Filters: func() []client.QueryFilter {

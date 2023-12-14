@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     baselime = {
-      version = "~> 0.1.3"
+      version = "~> 0.1.4"
       source  = "baselime/baselime"
     }
   }
@@ -14,7 +14,6 @@ provider "baselime" {
 resource "baselime_query" "terraformed" {
   name        = "terraformed-query"
   description = "This query was created by Terraform"
-  service     = "default"
   datasets    = ["lambda-logs"]
   filters     = [
     {
@@ -53,7 +52,6 @@ resource "baselime_query" "terraformed" {
 resource "baselime_alert" "terraformed" {
   name        = "terraformed-alert"
   description = "This alert was created by Terraform"
-  service     = "default"
   enabled     = true
   channels = [
     {
@@ -73,7 +71,6 @@ resource "baselime_alert" "terraformed" {
 resource "baselime_dashboard" "terraformed" {
   name        = "terraformed-dashboard"
   description = "This alert was created by Terraform"
-  service     = "default"
   widgets     = [
     {
       query_id     = baselime_query.terraformed.id

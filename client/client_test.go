@@ -12,7 +12,7 @@ func TestClient_GetQueries(t *testing.T) {
 		APIKey:  os.Getenv("BASELIME_API_KEY"),
 	}
 	c := NewClient(config)
-	q, err := c.GetQuery(context.Background(), "default", "terraformed-query")
+	q, err := c.GetQuery(context.Background(), "terraformed-query")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -24,7 +24,6 @@ func TestClient_CreateQuery(t *testing.T) {
 		Id:          "terraformed-query",
 		Name:        "terraformed-query",
 		Description: "Terraformed query",
-		Service:     "default",
 		Parameters: QueryParameters{
 			Datasets: []string{"lambda-logs"},
 			Filters: []QueryFilter{

@@ -17,7 +17,6 @@ type Dashboard struct {
 	Id          string              `json:"id"`
 	Name        string              `json:"name,omitempty"`
 	Description string              `json:"description,omitempty"`
-	Service     string              `json:"service"`
 	Parameters  DashboardParameters `json:"parameters"`
 }
 
@@ -64,8 +63,8 @@ func (c *Client) CreateDashboard(ctx context.Context, dashboard *Dashboard) erro
 }
 
 // GetDashboard retrieves an existing dashboard
-func (c *Client) GetDashboard(ctx context.Context, serviceId, dashboardId string) (*Dashboard, error) {
-	path := fmt.Sprintf("/v1/dashboards/%s/%s", serviceId, dashboardId)
+func (c *Client) GetDashboard(ctx context.Context, dashboardId string) (*Dashboard, error) {
+	path := fmt.Sprintf("/v1/dashboards/%s", dashboardId)
 	req, err := http.NewRequest(http.MethodGet, path, nil)
 	if err != nil {
 		return nil, err
@@ -76,14 +75,12 @@ func (c *Client) GetDashboard(ctx context.Context, serviceId, dashboardId string
 	}
 	if resp.StatusCode == http.StatusNotFound {
 		tflog.Trace(ctx, "dashboard not found", map[string]interface{}{
-			"serviceId":   serviceId,
 			"dashboardId": dashboardId,
 		})
 		return nil, nil
 	} else if resp.StatusCode != http.StatusOK {
 		tflog.Error(ctx, "failed to get a dashboard", map[string]interface{}{
 			"status_code": resp.StatusCode,
-			"serviceId":   serviceId,
 			"dashboardId": dashboardId,
 		})
 		return nil, fmt.Errorf("unexpected status code %d", resp.StatusCode)
@@ -98,7 +95,7 @@ func (c *Client) GetDashboard(ctx context.Context, serviceId, dashboardId string
 
 // UpdateDashboard updates an existing dashboard
 func (c *Client) UpdateDashboard(ctx context.Context, dashboard *Dashboard) error {
-	path := fmt.Sprintf("/v1/dashboards/%s/%s", dashboard.Service, dashboard.Id)
+	path := fmt.Sprintf("/v1/dashboards/%s", dashboard.Id)
 	buf := new(bytes.Buffer)
 	err := json.NewEncoder(buf).Encode(dashboard)
 	if err != nil {
@@ -119,8 +116,8 @@ func (c *Client) UpdateDashboard(ctx context.Context, dashboard *Dashboard) erro
 }
 
 // DeleteDashboard deletes an existing dashboard
-func (c *Client) DeleteDashboard(ctx context.Context, serviceId, dashboardId string) error {
-	path := fmt.Sprintf("/v1/dashboards/%s/%s", serviceId, dashboardId)
+func (c *Client) DeleteDashboard(ctx context.Context, dashboardId string) error {
+	path := fmt.Sprintf("/v1/dashboards/%s", dashboardId)
 	req, err := http.NewRequest(http.MethodDelete, path, nil)
 	if err != nil {
 		return err

@@ -15,7 +15,7 @@ If you have any questions or want to discuss Baselime, please join our [Slack co
 terraform {
   required_providers {
     baselime = {
-      version = "~> 0.1.3"
+      version = "~> 0.1.4"
       source  = "baselime/baselime"
     }
   }

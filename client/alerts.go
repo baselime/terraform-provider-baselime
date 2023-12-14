@@ -69,11 +69,10 @@ func (c *Client) CreateAlert(ctx context.Context, alert *Alert) error {
 	return nil
 }
 
-func (c *Client) GetAlert(ctx context.Context, serviceId, alertId string) (*Alert, error) {
-	url := fmt.Sprintf("/v1/alerts/%s/%s", serviceId, alertId)
+func (c *Client) GetAlert(ctx context.Context, alertId string) (*Alert, error) {
+	url := fmt.Sprintf("/v1/alerts/%s", alertId)
 	tflog.Trace(ctx, "getting an alert", map[string]interface{}{
-		"serviceId": serviceId,
-		"alertId":   alertId,
+		"alertId": alertId,
 	})
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -86,16 +85,14 @@ func (c *Client) GetAlert(ctx context.Context, serviceId, alertId string) (*Aler
 	defer resp.Body.Close()
 	if resp.StatusCode == http.StatusNotFound {
 		tflog.Trace(ctx, "alert not found", map[string]interface{}{
-			"serviceId": serviceId,
-			"alertId":   alertId,
+			"alertId": alertId,
 		})
 		return nil, nil
 	}
 	if resp.StatusCode != http.StatusOK {
 		tflog.Error(ctx, "failed to get alert", map[string]interface{}{
-			"status":    resp.Status,
-			"serviceId": serviceId,
-			"alertId":   alertId,
+			"status":  resp.Status,
+			"alertId": alertId,
 		})
 		return nil, fmt.Errorf("failed to get alert with status %s", resp.Status)
 	}
@@ -128,11 +125,10 @@ func (c *Client) UpdateAlert(ctx context.Context, alert *Alert) error {
 	return nil
 }
 
-func (c *Client) DeleteAlert(ctx context.Context, serviceId, alertId string) error {
-	url := fmt.Sprintf("/v1/alerts/%s/%s", serviceId, alertId)
+func (c *Client) DeleteAlert(ctx context.Context, alertId string) error {
+	url := fmt.Sprintf("/v1/alerts/%s/%s", alertId)
 	tflog.Trace(ctx, "deleting an alert", map[string]interface{}{
-		"serviceId": serviceId,
-		"alertId":   alertId,
+		"alertId": alertId,
 	})
 	req, err := http.NewRequest(http.MethodDelete, url, nil)
 	if err != nil {
