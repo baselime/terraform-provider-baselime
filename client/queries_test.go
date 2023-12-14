@@ -13,8 +13,7 @@ func TestClient_GetQuery(t *testing.T) {
 		httpClient *http.Client
 	}
 	type args struct {
-		serviceId string
-		queryId   string
+		queryId string
 	}
 	tests := []struct {
 		name    string
@@ -31,7 +30,7 @@ func TestClient_GetQuery(t *testing.T) {
 				config:     tt.fields.config,
 				httpClient: tt.fields.httpClient,
 			}
-			got, err := c.GetQuery(context.Background(), tt.args.serviceId, tt.args.queryId)
+			got, err := c.GetQuery(context.Background(), tt.args.queryId)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetQuery() error = %v, wantErr %v", err, tt.wantErr)
 				return

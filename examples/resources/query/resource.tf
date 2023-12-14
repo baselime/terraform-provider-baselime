@@ -1,7 +1,6 @@
 resource "baselime_query" "terraformed" {
   name        = "terraformed-query"
   description = "This query was created by Terraform"
-  service     = "default"
   datasets    = ["lambda-logs"]
   filters     = [
     {

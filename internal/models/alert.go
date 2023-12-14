@@ -8,7 +8,6 @@ import (
 type AlertResourceModel struct {
 	Name        types.String   `tfsdk:"name"`
 	Description types.String   `tfsdk:"description"`
-	Service     types.String   `tfsdk:"service"`
 	Enabled     types.Bool     `tfsdk:"enabled"`
 	Channels    []AlertChannel `tfsdk:"channels"`
 	Query       types.String   `tfsdk:"query"`
@@ -41,7 +40,6 @@ func (a *AlertResourceModel) ToApiModel() *client.Alert {
 		Id:          a.Name.ValueString(),
 		Name:        a.Name.ValueString(),
 		Description: a.Description.ValueString(),
-		Service:     a.Service.ValueString(),
 		Enabled:     a.Enabled.ValueBool(),
 		Channels: func() []client.AlertChannel {
 			channels := make([]client.AlertChannel, len(a.Channels))
@@ -65,7 +63,6 @@ func (a *AlertResourceModel) ToApiModel() *client.Alert {
 func (a *AlertResourceModel) FromApiModel(alert *client.Alert) {
 	a.Name = types.StringValue(alert.Id)
 	a.Description = types.StringValue(alert.Description)
-	a.Service = types.StringValue(alert.Service)
 	a.Enabled = types.BoolValue(alert.Enabled)
 	a.Channels = func() []AlertChannel {
 		channels := make([]AlertChannel, len(alert.Channels))

@@ -103,7 +103,7 @@ func (r *DashboardResource) Read(ctx context.Context, req resource.ReadRequest, 
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	dashboard, err := r.client.GetDashboard(ctx, data.Service.ValueString(), data.Name.ValueString())
+	dashboard, err := r.client.GetDashboard(ctx, data.Name.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to read dashboard, got error: %s", err))
 		return
@@ -139,7 +139,7 @@ func (r *DashboardResource) Delete(ctx context.Context, req resource.DeleteReque
 		return
 	}
 
-	err := r.client.DeleteDashboard(ctx, data.Service.ValueString(), data.Name.ValueString())
+	err := r.client.DeleteDashboard(ctx, data.Name.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to delete dashboard, got error: %s", err))
 		return

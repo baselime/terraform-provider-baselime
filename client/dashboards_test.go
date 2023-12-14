@@ -12,7 +12,7 @@ func TestClient_GetDashboard(t *testing.T) {
 		APIKey:  os.Getenv("BASELIME_API_KEY"),
 	}
 	c := NewClient(config)
-	q, err := c.GetDashboard(context.Background(), "default", "terraformed-dashboard")
+	q, err := c.GetDashboard(context.Background(), "terraformed-dashboard")
 	if err != nil {
 		t.Fatal(err)
 	}

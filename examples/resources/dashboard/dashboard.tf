@@ -2,7 +2,6 @@
 resource "baselime_query" "terraformed" {
   name        = "terraformed-query"
   description = "This query was created by Terraform"
-  service     = "default"
   datasets    = ["lambda-logs"]
   filters     = [
     {
@@ -41,7 +40,6 @@ resource "baselime_query" "terraformed" {
 resource "baselime_dashboard" "terraformed" {
   name        = "terraformed-dashboard"
   description = "This alert was created by Terraform"
-  service     = "default"
   widgets     = [
     {
       query_id     = baselime_query.terraformed.id

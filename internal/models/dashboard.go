@@ -8,7 +8,6 @@ import (
 type DashboardResourceModel struct {
 	Name        types.String      `tfsdk:"name"`
 	Description types.String      `tfsdk:"description"`
-	Service     types.String      `tfsdk:"service"`
 	Widgets     []DashboardWidget `tfsdk:"widgets"`
 }
 
@@ -38,7 +37,6 @@ func (d *DashboardResourceModel) ToApiModel() *client.Dashboard {
 		Id:          d.Name.ValueString(),
 		Name:        d.Name.ValueString(),
 		Description: d.Description.ValueString(),
-		Service:     d.Service.ValueString(),
 	}
 }
 
@@ -48,7 +46,6 @@ func (d *DashboardResourceModel) FromApiModel(dashboard *client.Dashboard) {
 	}
 	d.Name = types.StringValue(dashboard.Name)
 	d.Description = types.StringValue(dashboard.Description)
-	d.Service = types.StringValue(dashboard.Service)
 	d.Widgets = func() []DashboardWidget {
 		widgets := make([]DashboardWidget, 0, len(dashboard.Parameters.Widgets))
 		for _, widget := range dashboard.Parameters.Widgets {

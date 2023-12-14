@@ -4,8 +4,8 @@ Observability as Code with the [Baselime](https://baselime.io) Terraform provide
 
 ## Resources
 
-[Documentation](https://registry.terraform.io/providers/baselime/baselime/latest/docs)
-[Examples](https://github.com/baselime/terraform-provider-baselime/tree/main/examples/resources)
+* [Documentation](https://registry.terraform.io/providers/baselime/baselime/latest/docs)
+* [Examples](https://github.com/baselime/terraform-provider-baselime/tree/main/examples/resources)
 
 ## Community
 If you have any questions or want to discuss Baselime, please join our [Slack community](https://join.slack.com/t/baselimecommunity/shared_invite/zt-24fbumkc5-9O6qIj92xW_CbQSHeKT7CQ).
@@ -15,7 +15,7 @@ If you have any questions or want to discuss Baselime, please join our [Slack co
 terraform {
   required_providers {
     baselime = {
-      version = "~> 0.1.3"
+      version = "~> 0.1.4"
       source  = "baselime/baselime"
     }
   }
