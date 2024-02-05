@@ -37,9 +37,6 @@ func (r *QueryResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Query resource",
 		Attributes: map[string]schema.Attribute{
-			"id": schema.StringAttribute{
-				Computed: true,
-			},
 			"name": schema.StringAttribute{
 				Required:            true,
 				MarkdownDescription: "Query name",
@@ -47,10 +44,6 @@ func (r *QueryResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 			"description": schema.StringAttribute{
 				Required:            true,
 				MarkdownDescription: "Query description",
-			},
-			"service": schema.StringAttribute{
-				Required:            true,
-				MarkdownDescription: "Query service",
 			},
 			"datasets": schema.ListAttribute{
 				Required:            true,
@@ -144,7 +137,6 @@ func (r *QueryResource) Create(ctx context.Context, req resource.CreateRequest, 
 
 	// Read Terraform plan data into the model
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
-	data.Id = data.Name
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -217,5 +209,5 @@ func (r *QueryResource) Delete(ctx context.Context, req resource.DeleteRequest, 
 }
 
 func (r *QueryResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("name"), req, resp)
 }

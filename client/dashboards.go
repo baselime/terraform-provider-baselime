@@ -15,7 +15,6 @@ type GetDashboardResponse struct {
 
 type Dashboard struct {
 	Id          string              `json:"id"`
-	Name        string              `json:"name,omitempty"`
 	Description string              `json:"description,omitempty"`
 	Parameters  DashboardParameters `json:"parameters"`
 }
@@ -95,6 +94,9 @@ func (c *Client) GetDashboard(ctx context.Context, dashboardId string) (*Dashboa
 
 // UpdateDashboard updates an existing dashboard
 func (c *Client) UpdateDashboard(ctx context.Context, dashboard *Dashboard) error {
+	tflog.Trace(ctx, "updating dashboard", map[string]interface{}{
+		"name": dashboard.Id,
+	})
 	path := fmt.Sprintf("/v1/dashboards/%s", dashboard.Id)
 	buf := new(bytes.Buffer)
 	err := json.NewEncoder(buf).Encode(dashboard)

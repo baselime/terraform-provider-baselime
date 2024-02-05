@@ -22,7 +22,6 @@ func TestClient_GetQueries(t *testing.T) {
 func TestClient_CreateQuery(t *testing.T) {
 	q := &Query{
 		Id:          "terraformed-query",
-		Name:        "terraformed-query",
 		Description: "Terraformed query",
 		Parameters: QueryParameters{
 			Datasets: []string{"lambda-logs"},

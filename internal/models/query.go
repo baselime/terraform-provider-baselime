@@ -82,7 +82,6 @@ func (sn *SearchNeedle) ToApiModel() *client.SearchNeedle {
 
 // QueryResourceModel describes the resource data model.
 type QueryResourceModel struct {
-	Id                types.String       `tfsdk:"id"`
 	Name              types.String       `tfsdk:"name"`
 	Description       types.String       `tfsdk:"description"`
 	Datasets          []string           `tfsdk:"datasets"`
@@ -96,7 +95,7 @@ type QueryResourceModel struct {
 }
 
 func (data *QueryResourceModel) FromApiObject(obj *client.Query) {
-	data.Name = types.StringValue(obj.Name)
+	data.Name = types.StringValue(obj.Id)
 	data.Description = types.StringValue(obj.Description)
 	data.Datasets = obj.Parameters.Datasets
 	if obj.Parameters.Filters != nil {
@@ -156,7 +155,6 @@ func (data *QueryResourceModel) FromApiObject(obj *client.Query) {
 func (data *QueryResourceModel) ToApiObject() *client.Query {
 	return &client.Query{
 		Id:          data.Name.ValueString(),
-		Name:        data.Name.ValueString(),
 		Description: data.Description.ValueString(),
 		Parameters: client.QueryParameters{
 			Datasets: data.Datasets,

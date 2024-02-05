@@ -35,7 +35,6 @@ func (d *DashboardResourceModel) ToApiModel() *client.Dashboard {
 			}(),
 		},
 		Id:          d.Name.ValueString(),
-		Name:        d.Name.ValueString(),
 		Description: d.Description.ValueString(),
 	}
 }
@@ -44,7 +43,7 @@ func (d *DashboardResourceModel) FromApiModel(dashboard *client.Dashboard) {
 	if dashboard == nil {
 		return
 	}
-	d.Name = types.StringValue(dashboard.Name)
+	d.Name = types.StringValue(dashboard.Id)
 	d.Description = types.StringValue(dashboard.Description)
 	d.Widgets = func() []DashboardWidget {
 		widgets := make([]DashboardWidget, 0, len(dashboard.Parameters.Widgets))

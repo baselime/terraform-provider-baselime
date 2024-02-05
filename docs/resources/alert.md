@@ -23,7 +23,6 @@ Alert resource
 - `frequency` (String)
 - `name` (String) Alert name
 - `query` (String) Alert query
-- `service` (String) Alert service
 - `threshold` (Object) Alert threshold (see [below for nested schema](#nestedatt--threshold))
 - `window` (String)
 

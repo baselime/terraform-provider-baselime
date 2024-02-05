@@ -21,7 +21,6 @@ Query resource
 - `description` (String) Query description
 - `filters` (List of Object) Query filters (see [below for nested schema](#nestedatt--filters))
 - `name` (String) Query name
-- `service` (String) Query service
 
 ### Optional
 
@@ -31,10 +30,6 @@ Query resource
 - `limit` (Number) Query limit
 - `needle` (Object) (see [below for nested schema](#nestedatt--needle))
 - `order_by` (Object) (see [below for nested schema](#nestedatt--order_by))
-
-### Read-Only
-
-- `id` (String) The ID of this resource.
 
 <a id="nestedatt--filters"></a>
 ### Nested Schema for `filters`

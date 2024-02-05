@@ -2,7 +2,7 @@ resource "baselime_query" "terraformed" {
   name        = "terraformed-query"
   description = "This query was created by Terraform"
   datasets    = ["lambda-logs"]
-  filters     = [
+  filters = [
     {
       key       = "message"
       operation = "INCLUDES"
@@ -11,7 +11,7 @@ resource "baselime_query" "terraformed" {
     }
   ]
   filter_combination = "AND"
-  calculations       = [
+  calculations = [
     {
       key      = ""
       operator = "COUNT"
@@ -28,7 +28,7 @@ resource "baselime_query" "terraformed" {
     value = "count"
     order = "DESC"
   }
-  limit  = 10
+  limit = 10
   needle = {
     value      = ".*"
     is_regex   = true

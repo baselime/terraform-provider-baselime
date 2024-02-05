@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
+	"io"
 	"math/big"
 	"net/http"
 )
@@ -17,9 +18,7 @@ type AlertResponse struct {
 type Alert struct {
 	Parameters  AlertParameters `json:"parameters"`
 	Id          string          `json:"id"`
-	Name        string          `json:"name,omitempty"`
 	Description string          `json:"description,omitempty"`
-	Service     string          `json:"service"`
 	Enabled     bool            `json:"enabled"`
 	Channels    []AlertChannel  `json:"channels"`
 }
@@ -97,11 +96,16 @@ func (c *Client) GetAlert(ctx context.Context, alertId string) (*Alert, error) {
 		return nil, fmt.Errorf("failed to get alert with status %s", resp.Status)
 	}
 	alertResponse := new(AlertResponse)
-	return alertResponse.Alert, json.NewDecoder(resp.Body).Decode(alertResponse)
+	b, _ := io.ReadAll(resp.Body)
+	err = json.Unmarshal(b, alertResponse)
+	if alertResponse.Alert == nil {
+		tflog.Error(ctx, "failed to decode alert body", map[string]interface{}{"alertResponse": string(b)})
+	}
+	return alertResponse.Alert, err
 }
 
 func (c *Client) UpdateAlert(ctx context.Context, alert *Alert) error {
-	url := fmt.Sprintf("/v1/alerts/%s/%s", alert.Service, alert.Id)
+	url := fmt.Sprintf("/v1/alerts/%s", alert.Id)
 	buf := new(bytes.Buffer)
 	err := json.NewEncoder(buf).Encode(alert)
 	if err != nil {
@@ -126,7 +130,7 @@ func (c *Client) UpdateAlert(ctx context.Context, alert *Alert) error {
 }
 
 func (c *Client) DeleteAlert(ctx context.Context, alertId string) error {
-	url := fmt.Sprintf("/v1/alerts/%s/%s", alertId)
+	url := fmt.Sprintf("/v1/alerts/%s", alertId)
 	tflog.Trace(ctx, "deleting an alert", map[string]interface{}{
 		"alertId": alertId,
 	})

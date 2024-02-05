@@ -43,10 +43,6 @@ func (r *AlertResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				Required:            true,
 				MarkdownDescription: "Alert description",
 			},
-			"service": schema.StringAttribute{
-				Required:            true,
-				MarkdownDescription: "Alert service",
-			},
 			"enabled": schema.BoolAttribute{
 				Required:            true,
 				MarkdownDescription: "Alert enabled",
@@ -176,5 +172,5 @@ func (r *AlertResource) Delete(ctx context.Context, req resource.DeleteRequest, 
 }
 
 func (r *AlertResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("name"), req, resp)
 }

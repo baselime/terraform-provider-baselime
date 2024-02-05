@@ -18,7 +18,6 @@ Dashboard resource
 ### Required
 
 - `name` (String)
-- `service` (String)
 - `widgets` (List of Object) Dashboard widgets (see [below for nested schema](#nestedatt--widgets))
 
 ### Optional

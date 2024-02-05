@@ -41,9 +41,6 @@ func (r *DashboardResource) Schema(ctx context.Context, req resource.SchemaReque
 			"description": schema.StringAttribute{
 				Optional: true,
 			},
-			"service": schema.StringAttribute{
-				Required: true,
-			},
 			"widgets": schema.ListAttribute{
 				Required:            true,
 				MarkdownDescription: "Dashboard widgets",
@@ -147,5 +144,5 @@ func (r *DashboardResource) Delete(ctx context.Context, req resource.DeleteReque
 }
 
 func (r *DashboardResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("name"), req, resp)
 }

@@ -3,7 +3,7 @@ resource "baselime_query" "terraformed" {
   name        = "terraformed-query"
   description = "This query was created by Terraform"
   datasets    = ["lambda-logs"]
-  filters     = [
+  filters = [
     {
       key       = "message"
       operation = "INCLUDES"
@@ -12,7 +12,7 @@ resource "baselime_query" "terraformed" {
     }
   ]
   filter_combination = "AND"
-  calculations       = [
+  calculations = [
     {
       key      = ""
       operator = "COUNT"
@@ -29,7 +29,7 @@ resource "baselime_query" "terraformed" {
     value = "count"
     order = "DESC"
   }
-  limit  = 10
+  limit = 10
   needle = {
     value      = ".*"
     is_regex   = true
@@ -40,9 +40,9 @@ resource "baselime_query" "terraformed" {
 resource "baselime_dashboard" "terraformed" {
   name        = "terraformed-dashboard"
   description = "This alert was created by Terraform"
-  widgets     = [
+  widgets = [
     {
-      query_id     = baselime_query.terraformed.id
+      query_id    = baselime_query.terraformed.id
       type        = "timeseries"
       name        = "Line Chart"
       description = "This is a line chart"

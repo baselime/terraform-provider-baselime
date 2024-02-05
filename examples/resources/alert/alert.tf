@@ -3,7 +3,7 @@ resource "baselime_query" "terraformed" {
   name        = "terraformed-query"
   description = "This query was created by Terraform"
   datasets    = ["lambda-logs"]
-  filters     = [
+  filters = [
     {
       key       = "message"
       operation = "INCLUDES"
@@ -12,7 +12,7 @@ resource "baselime_query" "terraformed" {
     }
   ]
   filter_combination = "AND"
-  calculations       = [
+  calculations = [
     {
       key      = ""
       operator = "COUNT"
@@ -29,7 +29,7 @@ resource "baselime_query" "terraformed" {
     value = "count"
     order = "DESC"
   }
-  limit  = 10
+  limit = 10
   needle = {
     value      = ".*"
     is_regex   = true
@@ -47,10 +47,10 @@ resource "baselime_alert" "terraformed" {
       targets = ["foo@baselime.io"]
     }
   ]
-  query     = baselime_query.terraformed.id
+  query = baselime_query.terraformed.id
   threshold = {
     operator = "GREATER_THAN"
-    value     = 0
+    value    = 0
   }
   frequency = "5m"
   window    = "5m"

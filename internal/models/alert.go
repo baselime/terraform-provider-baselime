@@ -38,7 +38,6 @@ func (a *AlertResourceModel) ToApiModel() *client.Alert {
 			Window:    a.Window.ValueString(),
 		},
 		Id:          a.Name.ValueString(),
-		Name:        a.Name.ValueString(),
 		Description: a.Description.ValueString(),
 		Enabled:     a.Enabled.ValueBool(),
 		Channels: func() []client.AlertChannel {
