@@ -1,3 +1,8 @@
+## v0.1.5 (2023-02-26)
+
+FIXES:
+* Fixes null value issue when importing resources
+
 ## v0.1.5 (2023-02-05)
 
 UPDATES:
