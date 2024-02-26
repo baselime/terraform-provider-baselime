@@ -89,9 +89,9 @@ type QueryResourceModel struct {
 	FilterCombination types.String       `tfsdk:"filter_combination"`
 	Calculations      []QueryCalculation `tfsdk:"calculations"`
 	GroupBy           []QueryGroupBy     `tfsdk:"group_by"`
-	OrderBy           QueryOrderBy       `tfsdk:"order_by"`
+	OrderBy           *QueryOrderBy      `tfsdk:"order_by"`
 	Limit             types.Int64        `tfsdk:"limit"`
-	Needle            SearchNeedle       `tfsdk:"needle"`
+	Needle            *SearchNeedle      `tfsdk:"needle"`
 }
 
 func (data *QueryResourceModel) FromApiObject(obj *client.Query) {
@@ -137,14 +137,14 @@ func (data *QueryResourceModel) FromApiObject(obj *client.Query) {
 		}()
 	}
 	if obj.Parameters.OrderBy != nil {
-		data.OrderBy = QueryOrderBy{
+		data.OrderBy = &QueryOrderBy{
 			Value: types.StringValue(obj.Parameters.OrderBy.Value),
 			Order: types.StringValue(obj.Parameters.OrderBy.Order),
 		}
 	}
 	data.Limit = types.Int64Value(obj.Parameters.Limit)
 	if obj.Parameters.Needle != nil {
-		data.Needle = SearchNeedle{
+		data.Needle = &SearchNeedle{
 			Value:     types.StringValue(obj.Parameters.Needle.Value),
 			IsRegex:   types.BoolValue(obj.Parameters.Needle.IsRegex),
 			MatchCase: types.BoolValue(obj.Parameters.Needle.MatchCase),

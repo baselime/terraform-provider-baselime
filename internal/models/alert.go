@@ -6,14 +6,14 @@ import (
 )
 
 type AlertResourceModel struct {
-	Name        types.String   `tfsdk:"name"`
-	Description types.String   `tfsdk:"description"`
-	Enabled     types.Bool     `tfsdk:"enabled"`
-	Channels    []AlertChannel `tfsdk:"channels"`
-	Query       types.String   `tfsdk:"query"`
-	Threshold   AlertThreshold `tfsdk:"threshold"`
-	Frequency   types.String   `tfsdk:"frequency"`
-	Window      types.String   `tfsdk:"window"`
+	Name        types.String    `tfsdk:"name"`
+	Description types.String    `tfsdk:"description"`
+	Enabled     types.Bool      `tfsdk:"enabled"`
+	Channels    []AlertChannel  `tfsdk:"channels"`
+	Query       types.String    `tfsdk:"query"`
+	Threshold   *AlertThreshold `tfsdk:"threshold"`
+	Frequency   types.String    `tfsdk:"frequency"`
+	Window      types.String    `tfsdk:"window"`
 }
 
 type AlertChannel struct {
