@@ -41,12 +41,6 @@ type QueryFilter struct {
 	Type      string `json:"type,omitempty"`
 }
 
-func (qf *QueryFilter) ToApiModel() {
-	if qf.Type == "" {
-		qf.Type = "string"
-	}
-}
-
 type QueryCalculation struct {
 	Key      string `json:"key,omitempty"`
 	Operator string `json:"operator,omitempty"`

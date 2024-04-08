@@ -49,7 +49,7 @@ resource "baselime_alert" "terraformed" {
   ]
   query = baselime_query.terraformed.id
   threshold = {
-    operator = "GREATER_THAN"
+    operator = ">"
     value    = 0
   }
   frequency = "5m"
